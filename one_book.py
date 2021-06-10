@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import csv
+from os import mkdir
 
 
 class BookScrapper:
@@ -94,9 +95,9 @@ class BookScrapper:
         Methode that will write the infos of the book in a CSV file, with proper column headers. Default name will be
         the book title, but you can pass any name for the file in argument.
         """
-        csv_name = csv_name or (self.title + '.csv')
+        csv_file = csv_name or (self.title + '.csv')
         row_list = self.rows
-        with open(csv_name, 'w', newline='') as file:
+        with open('files/' + csv_file, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(row_list)
 

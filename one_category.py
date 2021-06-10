@@ -1,6 +1,7 @@
 from one_book import BookScrapper
 from bs4 import BeautifulSoup
 import requests
+from time import sleep
 
 
 class CategoryScrapper:
@@ -16,6 +17,7 @@ class CategoryScrapper:
         # list storing books links
         self.links_list = []
         self.category = ''
+        self.suffix = 'index.html'
 
     def page_parsing(self):
         """
@@ -30,8 +32,11 @@ class CategoryScrapper:
         if soup.find('li', attrs={'class': 'next'}):
             next_page = soup.find('li', {'class': 'next'})
             next_link = next_page.select('li a[href]')[0]['href']
-            self.url = url_category.removesuffix('index.html') + next_link
+            self.url = url_category.removesuffix(self.suffix) + next_link
+            self.suffix = next_link
             self.page_parsing()
+
+
 
     def links_scrapping(self, soup):
         """
