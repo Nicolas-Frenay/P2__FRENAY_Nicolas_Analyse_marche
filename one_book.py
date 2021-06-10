@@ -3,7 +3,7 @@ import requests
 import csv
 
 
-# Scrapping function
+# Scrapping object
 class Book_Scrapper():
     def __init__(self):
         # Creating the columns headers row
