@@ -3,15 +3,24 @@ import requests
 import csv
 
 
-# Scrapping function
-class Book_Scrapper():
+class BookScrapper:
+    """
+    Book scrapper object, it will grab all infos on the book page which url's is give as a argument
+    """
+
     def __init__(self):
         # Creating the columns headers row
         self.rows = [['product_page_url', 'universal_product_code', 'title', 'price_including_tax',
-                      'price_excluding_tax',
-                      'number_available', 'product_description', 'category', 'review_rating', 'image_url'], ]
+                      'price_excluding_tax', 'number_available', 'product_description', 'category',
+                      'review_rating', 'image_url'], ]
+        self.title = ''
 
     def scrap(self, url):
+        """
+        Methode that will scrap the book infos from its https://books.toscrape.com/ page. It will scrap the product
+        page url, the UPC, the title, the price (both with and without tax), the number available, the description,
+        the category, the rating and the image url.
+        """
         # test web page and parse URL with BS4
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -31,7 +40,8 @@ class Book_Scrapper():
         temp_row.append(upc)
 
         # to get the book title
-        temp_row.append(soup.h1.text)
+        self.title = soup.h1.text
+        temp_row.append(self.title)
 
         # get the price with tax from the table
         price_with_tax = data[2].text
@@ -66,6 +76,7 @@ class Book_Scrapper():
             if rate == rating:
                 final_rating = (str(rating_value.index(rate)) + '/5')
                 temp_row.append(final_rating)
+                break
 
         # get the book image's URL
         source = soup.find('div', {'class': 'item active'})
@@ -78,9 +89,14 @@ class Book_Scrapper():
         self.rows.append(temp_row)
 
     # writing data in csv file
-    def write_csv(self):
+    def write_csv(self, csv_name=None):
+        """
+        Methode that will write the infos of the book in a CSV file, with proper column headers. Default name will be
+        the book title, but you can pass any name for the file in argument.
+        """
+        csv_name = csv_name or (self.title + '.csv')
         row_list = self.rows
-        with open("one_book_scrap.csv", 'w', newline='') as file:
+        with open(csv_name, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(row_list)
 
@@ -89,6 +105,6 @@ if __name__ == '__main__':
     # specify url
     product_page = input("Entrez l'url du livre dont vous voulez récupérer les données :") or (
         'https://books.toscrape.com/catalogue/it_330/index.html')
-    scrapper = Book_Scrapper()
+    scrapper = BookScrapper()
     scrapper.scrap(product_page)
     scrapper.write_csv()
