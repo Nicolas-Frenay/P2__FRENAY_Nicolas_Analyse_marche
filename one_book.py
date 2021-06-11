@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import csv
-
+from os import mkdir
 
 
 class BookScrapper:
@@ -15,6 +15,16 @@ class BookScrapper:
                       'price_excluding_tax', 'number_available', 'product_description', 'category',
                       'review_rating', 'image_url'], ]
         self.title = ''
+        self.category = ''
+        self.img_link = ''
+        try:
+            mkdir('csv_files')
+        except FileExistsError:
+            pass
+        try:
+            mkdir('images')
+        except FileExistsError:
+            pass
 
     def scrap(self, url):
         """
@@ -66,6 +76,7 @@ class BookScrapper:
         cat = soup.find('ul', {'class': 'breadcrumb'})
         crumb_list = cat.findAll('li')
         category = crumb_list[2].text
+        self.category = category
         temp_row.append(category)
 
         # get the rating of the book
@@ -84,10 +95,21 @@ class BookScrapper:
         link = source.find('img')
         img_link = 'https://books.toscrape.com'
         img_link = img_link + link['src'][5:]
+        self.img_link = img_link
         temp_row.append(img_link)
 
         # insertion temp row
         self.rows.append(temp_row)
+
+        # Downloading image and recording it in images/category folder
+        try:
+            mkdir('images/' + self.category)
+        except FileExistsError:
+            pass
+        image = requests.get(self.img_link)
+        img_file = open('images/' + self.category + '/' + self.title.replace('/', ' - ') + '.jpg', 'wb')
+        img_file.write(image.content)
+        img_file.close()
 
     # writing data in csv file
     def write_csv(self, csv_name=None):
@@ -97,7 +119,7 @@ class BookScrapper:
         """
         csv_file = csv_name or (self.title + '.csv')
         row_list = self.rows
-        with open('files/' + csv_file, 'w', newline='') as file:
+        with open('csv_files/' + csv_file, 'w', newline='') as file:
             writer = csv.writer(file)
             writer.writerows(row_list)
 

@@ -1,6 +1,5 @@
 /env/
 /.idea
-/test.csv
 /test-csv.py
 /test-scraping.py
 /analyse url page produit.rtf
@@ -9,3 +8,4 @@
 /test-whole.py
 /files/
 /Images/
+/brouillon readme.rtf

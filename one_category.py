@@ -1,7 +1,6 @@
 from one_book import BookScrapper
 from bs4 import BeautifulSoup
 import requests
-from time import sleep
 
 
 class CategoryScrapper:
@@ -35,8 +34,6 @@ class CategoryScrapper:
             self.url = url_category.removesuffix(self.suffix) + next_link
             self.suffix = next_link
             self.page_parsing()
-
-
 
     def links_scrapping(self, soup):
         """
