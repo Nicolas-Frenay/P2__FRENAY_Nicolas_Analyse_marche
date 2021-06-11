@@ -17,7 +17,7 @@ list_cat = list_nav.findAll('a')
 cat_links = []
 
 # Inserting formated URL for each category into the cat_links list
-for links in list_cat[1:2]:
+for links in list_cat[1]:
     cat_links.append(site.removesuffix('index.html') + links['href'])
 
 # Looping in the list of links, for each link we call the category scrapper object from one_category.py,
