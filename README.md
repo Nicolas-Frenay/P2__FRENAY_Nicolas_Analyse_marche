@@ -2,11 +2,11 @@
 Projet 2 - Analyse de marché
 
 Le projet contient 3 fichiers python :
-one_book.py : permet de récupérer les données d'un seul livre, dans un fichier *.csv qui sera nommé comme le livre, et de telecharger l'image de couverture 
+one_book.py : permet de récupérer les données d'un seul livre, dans un fichier csv qui sera nommé comme le livre, et de telecharger l'image de couverture 
   dans un dossier du nom de la category du livre.
-one_category.py : permet de récupérer les données d'une categorie complete, dans un fichier *.csv contenant les données de toute la categorie. Les images 
+one_category.py : permet de récupérer les données d'une categorie complete, dans un fichier csv contenant les données de toute la categorie. Les images 
   des couvertures des livres seront dans un dossier du nom de la categorie.
-scrapper-Books.toScrap.py : permet de récupérer les données de tout les livres du site, chaque categorie sera stockée dans un fichier *.csv different, 
+scrapper-Books.toScrap.py : permet de récupérer les données de tout les livres du site, chaque categorie sera stockée dans un fichier csv different, 
   et les images seront dans des dossiers par categorie.
 
 
