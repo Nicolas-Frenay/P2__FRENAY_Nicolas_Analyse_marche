@@ -101,7 +101,7 @@ class BookScrapper:
         # insertion temp row
         self.rows.append(temp_row)
 
-        #Downloading image and recording it in images/category folder
+        # Downloading image and recording it in images/category folder
         try:
             mkdir('images/' + self.category)
         except FileExistsError:
@@ -111,7 +111,7 @@ class BookScrapper:
         img_file.write(image.content)
         img_file.close()
 
-    #writing data in csv file
+    # writing data in csv file
     def write_csv(self, csv_name=None):
         """
         Methode that will write the infos of the book in a CSV file, with proper column headers. Default name will be
