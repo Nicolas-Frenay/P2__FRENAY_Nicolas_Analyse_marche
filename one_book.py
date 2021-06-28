@@ -6,7 +6,8 @@ from os import mkdir
 
 class BookScrapper:
     """
-    Book scrapper object, it will grab all infos on the book page which url's is give as a argument
+    Book scrapper object, it will grab all infos on the book page which url's is give as an argument for its scrap
+    methode
     """
 
     def __init__(self):
@@ -80,7 +81,7 @@ class BookScrapper:
         temp_row.append(category)
 
         # get the rating of the book
-        rating_value = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five']
+        rating_value = ('Zero', 'One', 'Two', 'Three', 'Four', 'Five')
         book_rating = soup.find('div', {'class': 'col-sm-6 product_main'})
         class_list = book_rating.findAll('p')
         rating = class_list[2].attrs['class'][1]
