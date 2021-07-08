@@ -3,15 +3,17 @@ from os import mkdir
 import re
 import csv
 
+
 class BookScrapper:
     """
     Book scrapper object, it will grab all infos on the book page which url's is give as an argument for its scrap
     methode
     """
+
     def __init__(self):
         self.rows = [['product_page_url', 'universal_product_code', 'title', 'price_including_tax',
-                          'price_excluding_tax', 'number_available', 'product_description', 'category',
-                          'review_rating', 'image_url'], ]
+                      'price_excluding_tax', 'number_available', 'product_description', 'category',
+                      'review_rating', 'image_url'], ]
         self.title = ''
         self.category = ''
         self.img_link = ''
@@ -24,63 +26,63 @@ class BookScrapper:
         except FileExistsError:
             pass
 
-
-    def scrap(self, url):
+    def scrap(self, book_url):
         temp_row = []
-        self.url = url or 'http://books.toscrape.com/catalogue/it_330/index.html'
-
+        if re.search('^https', book_url):
+            url = 'http' + book_url.removeprefix('https')
+        else:
+            url = book_url
 
         html_page = urlopen(url)
         html_data = html_page.read().decode('utf-8')
 
-        #URL
+        # URL
         temp_row.append(url)
 
-        #UPC
+        # UPC
         book_UPC = re.search('(?<=<th>UPC</th><td>).*?(?=</td>)', html_data).group()
         temp_row.append(book_UPC)
 
-        #title
-        book_title = re.search('(?<=<h1>).*?(?=</h1>)',html_data).group()
+        # title
+        book_title = re.search('(?<=<h1>).*?(?=</h1>)', html_data).group()
         self.title = book_title
         temp_row.append(book_title)
 
-        #price inc
+        # price inc
         book_price_TTC = re.search('(?<=<th>Price \(incl\. tax\)</th><td>).*?(?=</td>)', html_data).group()
         temp_row.append(book_price_TTC)
 
-        # #price exc
+        # price exc
         price_HT = re.search('(?<=<th>Price \(excl\. tax\)</th><td>).*?(?=</td>)', html_data).group()
         temp_row.append(price_HT)
 
-        #avail
+        # avail
         availability = re.search('(?<=</i>).*?(?=</p>)', html_data, re.DOTALL).group()
         availability = availability.strip()
         temp_row.append(availability)
 
-
-        #description
+        # description
         desc_select = re.search('(?<=Product Description</h2>).*?(?=<div)', html_data, re.DOTALL).group()
         description = re.search('(?<=<p>).*?(?=</p>)', desc_select, re.DOTALL).group()
         temp_row.append(description)
 
-        #category
+        # category
         cat_selec = re.search('(?<=/category/books/).*?(?=</li>)', html_data, re.DOTALL).group()
         category = re.search('(?<=">).*?(?=</a>)', cat_selec).group()
         self.category = category
         temp_row.append(category)
 
-        #review
+        # review
         rating_value = ('Zero', 'One', 'Two', 'Three', 'Four', 'Five')
-        rating = re.search('(?<=star-rating ).*?(?=">)',html_data).group()
+        rating = re.search('(?<=star-rating ).*?(?=">)', html_data).group()
         for rate in rating_value:
             if rate == rating:
                 final_rating = (str(rating_value.index(rate)) + '/5')
                 temp_row.append(final_rating)
                 break
 
-        #img url
-        img_url = re.search('(?<=img src=).*?(?=" alt=")',html_data).group()
+        # img url
+        img_url = re.search('(?<=img src=).*?(?=" alt=")', html_data).group()
         img_link = 'http://books.toscrape.com'
         img_link = img_link + img_url[5:]
         self.img_link = img_link
@@ -110,6 +112,7 @@ class BookScrapper:
             writer = csv.writer(file)
             writer.writerows(row_list)
 
+
 if __name__ == '__main__':
     # specify url
     product_page = input("Entrez l'url du livre dont vous voulez récupérer les données :") or (
@@ -117,5 +120,3 @@ if __name__ == '__main__':
     scrapper = BookScrapper()
     scrapper.scrap(product_page)
     scrapper.write_csv()
-
-
