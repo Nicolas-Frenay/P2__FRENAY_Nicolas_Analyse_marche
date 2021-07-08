@@ -62,9 +62,12 @@ class BookScrapper:
         temp_row.append(availability)
 
         # description
-        desc_select = re.search('(?<=Product Description</h2>).*?(?=<div)', html_data, re.DOTALL).group()
-        description = re.search('(?<=<p>).*?(?=</p>)', desc_select, re.DOTALL).group()
-        temp_row.append(description)
+        if re.search('(?<=Product Description</h2>).*?(?=<div)', html_data):
+            desc_select = re.search('(?<=Product Description</h2>).*?(?=<div)', html_data, re.DOTALL).group()
+            description = re.search('(?<=<p>).*?(?=</p>)', desc_select, re.DOTALL).group()
+            temp_row.append(description)
+        else:
+            temp_row.append('Aucune déscription disponible')
 
         # category
         cat_selec = re.search('(?<=/category/books/).*?(?=</li>)', html_data, re.DOTALL).group()
