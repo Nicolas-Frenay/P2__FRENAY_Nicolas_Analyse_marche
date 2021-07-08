@@ -10,7 +10,7 @@ html_data = html_page.read().decode('utf-8')
 # creating empty list to store categories urls
 cat_links = []
 
-#getting links for all categories, then storing them in a list
+# getting links for all categories, then storing them in a list
 menu_lists = re.search('(?<=<ul>).*?(?=</ul>)', html_data, re.DOTALL).group()
 li_list = re.findall('(?<= <li>).*?(?=</li>)', menu_lists, re.DOTALL)
 for items in li_list:

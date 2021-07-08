@@ -27,6 +27,11 @@ class BookScrapper:
             pass
 
     def scrap(self, book_url):
+        """
+        Method that scrap data for one book which url's had been given in argmuent, and store those infos in a list,
+        add this list to the final list that will be written in a csv file, and download the image of the book, and
+        store it in a folder named after the category of the book.
+        """
         temp_row = []
         if re.search('^https', book_url):
             url = 'http' + book_url.removeprefix('https')
