@@ -6,3 +6,5 @@
 /Images/
 /brouillon readme.rtf
 /csv_files/
+/__pycache__/
+/.DS_Store
