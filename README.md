@@ -2,15 +2,15 @@
 # Projet 2 - Analyse de marché
 
 Le projet contient 3 fichiers python :
-- one_book.py : permet de récupérer les données d'un seul livre, dans un fichier csv qui sera nommé comme le livre, 
+- one_book_V2.py : permet de récupérer les données d'un seul livre, dans un fichier csv qui sera nommé comme le livre, 
   et de télécharger l'image de couverture 
   dans un dossier du nom de la catégorie du livre.
-- one_category.py : permet de récupérer les données d'une catégorie complete, dans un fichier csv contenant les 
+- one_category_V2.py : permet de récupérer les données d'une catégorie complete, dans un fichier csv contenant les 
   données de toute la catégorie. Les images 
   des couvertures des livres seront dans un dossier du nom de la catégorie.
-- scrapper-Books.toScrap.py : permet de récupérer les données de tout les livres du site, chaque catégorie sera 
+- scrapper-Books.toScrap_V2.py : permet de récupérer les données de tout les livres du site, chaque catégorie sera 
   stockée dans un fichier csv different, 
-  et les images seront dans des dossiers par catégorie.
+  et les images seront dans des dossiers nommés par catégorie.
 
 
 ## Instructions :
@@ -33,16 +33,14 @@ Le projet contient 3 fichiers python :
     - tapez : ```source env/bin/activate ```
   - Si vous êtes sous windows :
     - tapez ```env/Scripts/activate.bat```
+  (Les scripts n'utilisent pas de modules externes, il n'y a donc rien à installer en plus)  
 
-5) Installation des modules nécessaires :
-- dans le terminal, tapez : ```pip install -r requirements.txt```
-
-6) lancer le script :
-- dans le terminal tapez : ```python3 nom_du_script_voulu.py```
+5) lancer le script :
+- dans le terminal tapez : ```python3 <nom_du_script_voulu.py>```
 
   (Dans votre dossier de travail, vous verrez que les dossiers "csv_files" et "images" seront créés automatiquement.)
 
-7) Pour fermer l'environnement virtuel :
+6) Pour fermer l'environnement virtuel :
 - Dans le terminal, tapez : ```deactivate ```
 
 
