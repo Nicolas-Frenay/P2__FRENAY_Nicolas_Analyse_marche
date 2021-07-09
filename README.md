@@ -33,7 +33,7 @@ Le projet contient 3 fichiers python :
     - tapez : ```source env/bin/activate ```
   - Si vous êtes sous windows :
     - tapez ```env/Scripts/activate.bat```
-  (Les scripts n'utilisent pas de modules externes, il n'y a donc rien à installer en plus)  
+  - (Les scripts n'utilisent pas de modules externes, il n'y a donc rien à installer en plus)  
 
 5) lancer le script :
 - dans le terminal tapez : ```python3 <nom_du_script_voulu.py>```
